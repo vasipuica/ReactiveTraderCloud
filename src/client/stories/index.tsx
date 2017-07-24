@@ -24,16 +24,25 @@ storiesOf('Welcome', module).add('to Storybook', () =>
 //   .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>)
 
 
-storiesOf('Spot Tile', module)
-  .add('Buy & Sell buttons', () =>
-    <div className="spot-tile">
+const getButtons = (withContainerClass = true) =>
+  <div className={ withContainerClass ? 'spot-tile' : ''}>
       <PriceButton {...getButtonProps('Sell', action)} />
       <PriceButton {...getButtonProps('Buy', action)} />
-  </div>)
+  </div>
+
+
+storiesOf('Spot Tile', module)
+  .add('Buy & Sell buttons', () => getButtons(true))
 .add('Notional Input',  () => <div className="spot-tile" style={getNotionalStyling}>
     <div className="spot-tile__container">
     <NotionalInput {...getNotionalInputProps } />
     </div>
   </div>
-)
+).add('Notional Input & Buttons', () =>
+<div className="spot-tile" style={getNotionalStyling}>
+    <div className="spot-tile__container">
+      <div>{getButtons(false)}</div>
+      <NotionalInput {...getNotionalInputProps } />
+    </div>
+  </div>)
 
