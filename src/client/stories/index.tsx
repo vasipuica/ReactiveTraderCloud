@@ -33,16 +33,17 @@ const getButtons = (withContainerClass = true) =>
 
 storiesOf('Spot Tile', module)
   .add('Buy & Sell buttons', () => getButtons(true))
-.add('Notional Input',  () => <div className="spot-tile" style={getNotionalStyling}>
-    <div className="spot-tile__container">
-    <NotionalInput {...getNotionalInputProps } />
-    </div>
-  </div>
-).add('Notional Input & Buttons', () =>
-<div className="spot-tile" style={getNotionalStyling}>
-    <div className="spot-tile__container">
-      <div>{getButtons(false)}</div>
+  .add('Notional Input',  () =>
+    <div className="spot-tile" style={getNotionalStyling}>
+      <div className="spot-tile__container">
       <NotionalInput {...getNotionalInputProps } />
-    </div>
-  </div>)
+      </div>
+    </div>)
+  .add('Notional Input & Buttons', () =>
+    <div className="spot-tile" style={getNotionalStyling}>
+      <div className="spot-tile__container">
+        <div>{getButtons(false)}</div>
+        <NotionalInput {...getNotionalInputProps } />
+      </div>
+    </div>)
 
