@@ -1,4 +1,4 @@
-import d3 from 'd3'
+import { timeFormat } from 'd3-time-format'
 
 const numberConvertRegex = /^([0-9\.]+)?([MK]{1})?$/
 
@@ -27,6 +27,6 @@ export function hasShorthandInput(notionalShorthandRaw: string): boolean | null 
   return matches && matches[2] !== undefined // found K or M
 }
 
-export function formatDate(date: string, format: string = '%b %e, %H:%M:%S'): string {
-  return d3.time.format(format)(date)
+export function formatDate(date: Date, format: string = '%b %e, %H:%M:%S'): string {
+  return timeFormat(format)(date)
 }
