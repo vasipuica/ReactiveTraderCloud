@@ -19,7 +19,7 @@ export interface NotionalInputProps {
   currencyPair: {
     symbol: string
     // tslint:disable-next-line:trailing-comma
-    base: number
+    base: string
   }
   onChange: (number: number) => void
   maxValue: number

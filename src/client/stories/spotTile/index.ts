@@ -1,7 +1,9 @@
+
+const getRandomNumber = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1) + min)
+
 export const getButtonProps = (type: string, action: any) => {
 
-  const getRandomNumber = (min: number, max: number) =>
-    Math.floor(Math.random() * (max - min + 1) + min)
   const classNameType = type === 'Sell' ? 'bid' : 'ask'
 
   return {
@@ -15,4 +17,19 @@ export const getButtonProps = (type: string, action: any) => {
     },
     onExecute: action('buy clicked'),
   }
+}
+
+
+export const getNotionalInputProps = {
+  className: 'spot-tile__notional',
+  notional: 1000000,
+  currencyPair: { symbol: 'GBP', base: 'GBP' },
+  onChange: () => console.log('Changed'),
+  maxValue: 5000000,
+}
+
+export const getNotionalStyling = {
+  margin: '10% auto',
+  width: '30%',
+  padding: '5px',
 }

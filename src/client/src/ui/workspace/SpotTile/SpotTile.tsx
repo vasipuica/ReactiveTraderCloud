@@ -39,7 +39,7 @@ export interface SpotTileProps {
   currencyPair: {
     symbol: string
     // tslint:disable-next-line:trailing-comma
-    base: number
+    base: string
   }
   currentSpotPrice: CurrentSpotPrice
   executionConnected: boolean

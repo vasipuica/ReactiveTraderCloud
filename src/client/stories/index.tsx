@@ -3,14 +3,16 @@ import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
-import { getButtonProps } from './spotTile/index'
-// import SpotTile from '../src/ui/workspace/SpotTile'
+import { getButtonProps, getNotionalInputProps, getNotionalStyling } from './spotTile/index'
 
 import '../src/ui/common/styles/_base.scss'
 import '../src/ui/common/styles/_fonts.scss'
 
 import PriceButton from '../src/ui/workspace/SpotTile/PriceButton'
 import '../src/ui/workspace/SpotTile/spotTile.scss'
+
+import '../src/ui/workspace/SpotTile/notionalInput.scss'
+import NotionalInput from '../src/ui/workspace/SpotTile/NotionalInput'
 
 storiesOf('Welcome', module).add('to Storybook', () =>
   <button
@@ -23,8 +25,15 @@ storiesOf('Welcome', module).add('to Storybook', () =>
 
 
 storiesOf('Spot Tile', module)
-  .add('Buy/Sell button', () =>
+  .add('Buy & Sell buttons', () =>
     <div className="spot-tile">
       <PriceButton {...getButtonProps('Sell', action)} />
       <PriceButton {...getButtonProps('Buy', action)} />
-     </div>)
+  </div>)
+.add('Notional Input',  () => <div className="spot-tile" style={getNotionalStyling}>
+    <div className="spot-tile__container">
+    <NotionalInput {...getNotionalInputProps } />
+    </div>
+  </div>
+)
+
