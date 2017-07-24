@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as classnames from 'classnames'
 import { PriceMovementIndicator, PriceButton, NotionalInput, TradeNotification } from './'
 import * as moment from 'moment'
+import { connect } from 'react-redux'
 import './spotTile.scss'
 
 const SPOT_DATE_FORMAT = 'DD MMM'
@@ -53,12 +54,12 @@ export interface SpotTileProps {
   title: string
 }
 
-export default class SpotTile extends React.Component<SpotTileProps, {}> {
+class SpotTile extends React.Component<SpotTileProps, {}> {
   props: SpotTileProps
 
   render() {
-    const { canPopout, currencyChartIsOpening, currentSpotPrice, currencyPair, executionConnected, 
-      hasNotification, isRunningInOpenFin, isTradeExecutionInFlight, maxNotional, notification, 
+    const { canPopout, currencyChartIsOpening, currentSpotPrice, currencyPair, executionConnected,
+      hasNotification, isRunningInOpenFin, isTradeExecutionInFlight, maxNotional, notification,
       notional, priceStale, pricingConnected, title } = this.props
 
     const notionalInputClass = classnames('spot-tile__notional', { hide: hasNotification })
@@ -78,7 +79,7 @@ export default class SpotTile extends React.Component<SpotTileProps, {}> {
       : ''
     const className = classnames('spot-tile', {
       'spot-tile--stale': (!pricingConnected || priceStale) &&
-        !(hasNotification && notification.notificationType === 'Trade'),
+      !(hasNotification && notification.notificationType === 'Trade'),
       'spot-tile--readonly': !executionConnected,
       'spot-tile--executing': isTradeExecutionInFlight,
       'spot-tile--error': hasNotification && notification.error,
@@ -97,7 +98,7 @@ export default class SpotTile extends React.Component<SpotTileProps, {}> {
           notional={notional}
           onChange={notional => replaceWithAction('notionalChanged', { notional })}
           maxValue={maxNotional}
-          currencyPair={currencyPair}/>
+          currencyPair={currencyPair} />
         <div className={spotDateClass}>
           <span className="spot-tile__tenor">SP</span>
           <span className="spot-tile__delivery-date">. {formattedDate}</span>
@@ -109,11 +110,11 @@ export default class SpotTile extends React.Component<SpotTileProps, {}> {
         <div className="spot-tile__container">
           <div className="spot-tile__controls">
             <i className={chartIQIconClassName}
-               onClick={() => this.displayCurrencyChart()}/>
+              onClick={() => this.displayCurrencyChart()} />
             <i className={newWindowClassName}
-               onClick={() => replaceWithAction('popOutTile', {})}/>
+              onClick={() => replaceWithAction('popOutTile', {})} />
             <i className="popout__undock spot-tile__icon--undock glyphicon glyphicon-log-out"
-               onClick={() => replaceWithAction('undockTile', {})}/>
+              onClick={() => replaceWithAction('undockTile', {})} />
           </div>
           {!hasNotification ? spotTileContent : generatedNotification}
         </div>
@@ -137,17 +138,17 @@ export default class SpotTile extends React.Component<SpotTileProps, {}> {
           className="spot-tile__price spot-tile__price--bid"
           direction={directionSell}
           onExecute={() => this.executeTrade(directionSell)}
-          rate={currentSpotPrice.bid}/>
+          rate={currentSpotPrice.bid} />
         <div className="spot-tile__price-movement">
           <PriceMovementIndicator
             priceMovementType={currentSpotPrice.priceMovementType}
-            spread={currentSpotPrice.spread}/>
+            spread={currentSpotPrice.spread} />
         </div>
         <PriceButton
           className="spot-tile__price spot-tile__price--ask"
           direction={directionBuy}
           onExecute={() => this.executeTrade(directionBuy)}
-          rate={currentSpotPrice.ask}/>
+          rate={currentSpotPrice.ask} />
       </div>
     )
   }
@@ -164,7 +165,7 @@ export default class SpotTile extends React.Component<SpotTileProps, {}> {
         <TradeNotification
           className="spot-tile__trade-summary"
           tradeExecutionNotification={notification}
-          onDismissedClicked={() => replaceWithAction('tradeNotificationDismissed', {})}/>
+          onDismissedClicked={() => replaceWithAction('tradeNotificationDismissed', {})} />
       )
     } else if (notification.notificationType === 'Text') {
       return (
@@ -175,3 +176,26 @@ export default class SpotTile extends React.Component<SpotTileProps, {}> {
     }
   }
 }
+
+
+const mapStateToProps = (state:SpotTileProps): any => {
+  return {
+    canPopout: state.canPopout,
+    currencyChartIsOpening: state.currencyChartIsOpening,
+    currencyPair: state.currencyPair,
+    currentSpotPrice: state.currentSpotPrice,
+    executionConnected: state.executionConnected,
+    hasNotification: state.hasNotification,
+    isRunningInOpenFin: state.isRunningInOpenFin,
+    isTradeExecutionInFlight: state.isTradeExecutionInFlight,
+    maxNotional: state.maxNotional,
+    notification: state.notification,
+    notional: state.notional,
+    priceStale: state.priceStale,
+    pricingConnected: state.pricingConnected,
+    title: state.title,
+  }
+}
+
+
+export default connect(mapStateToProps)(SpotTile)
