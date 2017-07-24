@@ -1,3 +1,5 @@
+const _ = require('lodash')
+
 // you can use this file to add your custom webpack plugins, loaders and anything you like.
 // This is just the basic way to add additional webpack configurations.
 // For more information refer the docs: https://storybook.js.org/configurations/custom-webpack-config
@@ -7,21 +9,40 @@
 // to "React Create App". This only has babel loader to load JavaScript.
 
 // load the default config generator.
-const genDefaultConfig = require('@storybook/react/dist/server/config/defaults/webpack.config.js');
+const genDefaultConfig = require('@storybook/react/dist/server/config/defaults/webpack.config')
 module.exports = (baseConfig, env) => {
-  const config = genDefaultConfig(baseConfig, env);
-  // Extend it as you need.
-  // For example, add typescript loader:
-  config.module.rules.push({
-    test: /\.(ts|tsx)$/,
-    loader: require.resolve('ts-loader')
-  });
-  config.resolve.extensions.push('.ts', '.tsx');
+  const defaultConfig = genDefaultConfig(baseConfig, env)
 
-  config.module.rules.push({
-    test: /\.scss$/,
-    loaders: ['style-loader', 'css-loader', 'sass-loader']
-  });
-  
-  return config;
-};
+  const config = {
+    module: {
+      rules: [
+        {
+          test: /\.(ts|tsx)$/,
+          loader: require.resolve('ts-loader'),
+        },
+        {
+          test: /\.scss$/,
+          loaders: ['style-loader', 'css-loader', 'sass-loader']
+        },
+      ],
+    },
+    resolve: {
+      extensions: [
+        '.ts',
+        '.tsx',
+      ],
+    },
+  }
+
+  // merging customizer to concatenate arrays and remove duplicates
+  function unionIfArray(objValue, srcValue) {
+    if(objValue && (_.isArray(srcValue) !== _.isArray(objValue))) {
+      throw new Error('trying to assign non-array to array')
+    }
+    if (_.isArray(srcValue) && _.isArray(objValue)) {
+      return _.union(srcValue, objValue)
+    }
+  }
+
+  return _.mergeWith(config, defaultConfig, unionIfArray)
+}
