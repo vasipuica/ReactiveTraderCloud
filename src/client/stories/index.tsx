@@ -9,6 +9,7 @@ import { getContainerStyling, getButtonProps, getNotionalInputProps,
 import '../src/ui/common/styles/_base.scss'
 import '../src/ui/common/styles/_fonts.scss'
 
+import { Modal } from '../src/ui/Modal'
 import SpotTile, { NotionalInput, PriceButton, PriceMovementIndicator, 
        TradeNotification } from '../src/ui/SpotTile'
 import '../src/ui/SpotTile/spotTile.scss'
@@ -18,12 +19,24 @@ storiesOf('Welcome', module).add('to Storybook', () =>
     style={{ margin: '20px' }}
     onClick={linkTo('Spot Tile')}>Example link go to Spot Tile</button>)
 
-
 const getButtons = (withContainerClass = true) =>
   <div className={ withContainerClass ? 'spot-tile' : ''}>
       <PriceButton {...getButtonProps('Sell', action)} />
       <PriceButton {...getButtonProps('Buy', action)} />
   </div>
+
+storiesOf('Modal', module)
+  .add('Showing modal', () =>
+    <Modal shouldShow={true} title="Modal title">
+      <div>Child component in the modal</div>
+      <button className="btn shell__button--reconnect"
+              onClick={action('modal button clicked')}>A button
+      </button>
+    </Modal>)
+  .add('Not showing modal', () =>
+    <Modal shouldShow={false} title="Modal title">
+      <div>Child component in the modal</div>
+    </Modal>)
 
 
 storiesOf('Spot Tile', module)
