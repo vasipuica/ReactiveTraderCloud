@@ -2,29 +2,28 @@ import * as React from 'react'
 import * as classnames from 'classnames'
 import './trade-notification.scss'
 
-
 interface TradeNotificationProps {
   className: string,
-  tradeExecutionNotification: {
+  notification: {
     hasError: boolean
-    status: any
+    status: {
+      name: string,
+    }
     dealtCurrency: string
     notional: number
     termsCurrency: any
     direction: string
     spotRate: number
     formattedValueDate: string
-    // tslint:disable-next-line:trailing-comma
-    tradeId: string
+    tradeId: string,
   },
   onDismissedClicked: () => void
 }
 
-
 const tradeStatus = {
-  rejected: 'Rejected',
-  done: 'Done',
-  pending: 'Pending',
+  rejected: { name: 'Rejected' },
+  done: { name: 'Done' },
+  pending: { name: 'Pending' },
 }
 
 class TradeNotification extends React.Component<TradeNotificationProps, {}>{
@@ -38,7 +37,7 @@ class TradeNotification extends React.Component<TradeNotificationProps, {}>{
     )
     return (
     <div className={classNames}>
-      {this.props.tradeExecutionNotification.hasError}.
+      {this.props.notification.hasError}.
       The execution status is unknown. Please contact your sales rep.
         <a
           href="#"
@@ -50,37 +49,37 @@ class TradeNotification extends React.Component<TradeNotificationProps, {}>{
   }
 
   render() {
-    const { tradeExecutionNotification, onDismissedClicked, className } = this.props
+    const { notification, onDismissedClicked, className } = this.props
 
-    if (tradeExecutionNotification.hasError) {
+    if (notification.hasError) {
       return this.renderError()
     }
 
     const classNames = classnames(
       'trade-notification',
       className,
-      { 'trade-notification--rejected': tradeExecutionNotification.status === tradeStatus.rejected },
+      { 'trade-notification--rejected': notification.status.name === tradeStatus.rejected.name },
     )
     return (
       <div className={classNames}>
         <span className="trade-notification__trade-status">
-          {tradeExecutionNotification.status.name}
+          {notification.status.name}
           </span>
         <ul className="trade-notification__summary-items">
           <li
             // tslint:disable-next-line:max-line-length
             className="trade-notification__summary-item trade-notification__summary-item--direction">
-            {tradeExecutionNotification.direction}
+            {notification.direction}
           </li>
           <li
             className="trade-notification__summary-item trade-notification__summary-item--notional">
-            {tradeExecutionNotification.dealtCurrency} {tradeExecutionNotification.notional}
+            {notification.dealtCurrency} {notification.notional}
           </li>
           <li
             className="trade-notification__summary-item trade-notification__summary-item--currency">
             <span
               className="trade-notification__label--versus">vs </span>
-              {tradeExecutionNotification.termsCurrency}
+              {notification.termsCurrency}
           </li>
         </ul>
         <div className="trade-notification__details-items-container">
@@ -91,7 +90,7 @@ class TradeNotification extends React.Component<TradeNotificationProps, {}>{
             </li>
             <li
               className="trade-notification__details-item trade-notification__details-item--value">
-              {tradeExecutionNotification.spotRate}
+              {notification.spotRate}
             </li>
           </ul>
           <ul className="trade-notification__details-items trade-notification__details-items--date">
@@ -101,7 +100,7 @@ class TradeNotification extends React.Component<TradeNotificationProps, {}>{
             </li>
             <li
               className="trade-notification__details-item trade-notification__details-item--value">
-              {tradeExecutionNotification.formattedValueDate}
+              {notification.formattedValueDate}
             </li>
           </ul>
           <ul
@@ -112,7 +111,7 @@ class TradeNotification extends React.Component<TradeNotificationProps, {}>{
             </li>
             <li
               className="trade-notification__details-item trade-notification__details-item--value">
-              {tradeExecutionNotification.tradeId}
+              {notification.tradeId}
             </li>
           </ul>
         </div>

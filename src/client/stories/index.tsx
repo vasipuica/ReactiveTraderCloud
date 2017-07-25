@@ -3,25 +3,20 @@ import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
-import { getButtonProps, getNotionalInputProps, getNotionalStyling } from './spotTile/index'
+import { getContainerStyling, getButtonProps, getNotionalInputProps, 
+  getPriceMovementIndicatorProps, getSpotTileProps, getTradeNotificationProps } from './spotTile'
 
 import '../src/ui/common/styles/_base.scss'
 import '../src/ui/common/styles/_fonts.scss'
 
-import PriceButton from '../src/ui/workspace/SpotTile/PriceButton'
+import SpotTile, { NotionalInput, PriceButton, PriceMovementIndicator, 
+       TradeNotification } from '../src/ui/workspace/SpotTile'
 import '../src/ui/workspace/SpotTile/spotTile.scss'
-
-import '../src/ui/workspace/SpotTile/notionalInput.scss'
-import NotionalInput from '../src/ui/workspace/SpotTile/NotionalInput'
 
 storiesOf('Welcome', module).add('to Storybook', () =>
   <button
     style={{ margin: '20px' }}
     onClick={linkTo('Spot Tile')}>Example link go to Spot Tile</button>)
-
-// storiesOf('Button', module)
-//   .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-//   .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>)
 
 
 const getButtons = (withContainerClass = true) =>
@@ -32,18 +27,50 @@ const getButtons = (withContainerClass = true) =>
 
 
 storiesOf('Spot Tile', module)
-  .add('Buy & Sell buttons', () => getButtons(true))
+  .add('Full tile', () =>
+    <div style={getContainerStyling}>
+      <SpotTile {...getSpotTileProps()} />
+    </div>)
+  .add('Buy & Sell buttons', () =>
+    <div className="spot-tile" style={getContainerStyling}>
+      <PriceButton {...getButtonProps('Sell', action)} />
+      <PriceButton {...getButtonProps('Buy', action)} />
+    </div>)
   .add('Notional Input',  () =>
-    <div className="spot-tile" style={getNotionalStyling}>
+    <div className="spot-tile" style={getContainerStyling}>
       <div className="spot-tile__container">
       <NotionalInput {...getNotionalInputProps } />
       </div>
     </div>)
   .add('Notional Input & Buttons', () =>
-    <div className="spot-tile" style={getNotionalStyling}>
+    <div className="spot-tile" style={getContainerStyling}>
       <div className="spot-tile__container">
         <div>{getButtons(false)}</div>
         <NotionalInput {...getNotionalInputProps } />
       </div>
     </div>)
-
+  .add('Trade notification', () =>
+    <div>
+      <div className="spot-tile" style={getContainerStyling}>
+        <TradeNotification {...getTradeNotificationProps('Rejected', 'Up', false, action)} />
+      </div>
+      <div className="spot-tile" style={getContainerStyling}>
+        <TradeNotification {...getTradeNotificationProps('Done', 'Down', false, action)} />
+      </div>
+      <div className="spot-tile" style={getContainerStyling}>
+        <TradeNotification {...getTradeNotificationProps('Done', 'Down', true, action)} />
+      </div>
+    </div>)
+  .add('Price movement indicator', () =>
+    <div>
+      <div className="spot-tile" style={getContainerStyling}>
+        <div className="spot-tile__price-movement">
+          <PriceMovementIndicator {...getPriceMovementIndicatorProps('Up', '1.12')} />
+        </div>
+      </div>
+      <div className="spot-tile" style={getContainerStyling}>
+        <div className="spot-tile__price-movement">
+          <PriceMovementIndicator {...getPriceMovementIndicatorProps('Down', '-2.42')} />
+        </div>
+      </div>
+    </div>)

@@ -13,14 +13,15 @@ const CHAR_CODE_9         = 57
 const CHAR_CODE_UNIT_SEP  = 31
 const SHORTCUT_CHAR_CODES = [75, 77, 107, 109] // K, M, k, m
 
+export interface CurrencyPair {
+  symbol: string
+  base: string
+}
+
 export interface NotionalInputProps {
   className: string
   notional: number
-  currencyPair: {
-    symbol: string
-    // tslint:disable-next-line:trailing-comma
-    base: string
-  }
+  currencyPair: CurrencyPair
   onChange: (number: number) => void
   maxValue: number
 }

@@ -9,8 +9,7 @@ interface PriceButtonProps {
     pips: any
     bigFigure: number
     pipFraction: number
-    // tslint:disable-next-line:trailing-comma
-    rawRate: number
+    rawRate: number,
   },
   onExecute: () => void
 }

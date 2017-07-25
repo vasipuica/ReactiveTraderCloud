@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as classnames from 'classnames'
-import { PriceMovementIndicator, PriceButton, NotionalInput, TradeNotification } from './'
+import { CurrencyPair, PriceMovementIndicator, PriceButton, NotionalInput, 
+         TradeNotification } from './'
 import * as moment from 'moment'
-import { connect } from 'react-redux'
 import './spotTile.scss'
 
 const SPOT_DATE_FORMAT = 'DD MMM'
@@ -11,19 +11,16 @@ const SPOT_DATE_FORMAT = 'DD MMM'
 function replaceWithAction(a: any, b: any): void {
   return
 }
-type NotificationType = 'Trade' | 'Sell'
 interface Notification {
   error: any
-  // tslint:disable-next-line:trailing-comma
-  notificationType: NotificationType
+  notificationType: 'Trade' | 'Sell' | string
 }
 interface CurrentSpotPrice {
   ask: any
   bid: any
   priceMovementType: string
   spread: {
-    // tslint:disable-next-line:trailing-comma
-    formattedValue: string
+    formattedValue: string,
   }
   valueDate: number
 }
@@ -31,16 +28,12 @@ interface Direction {
   name: 'Buy' | 'Sell' | string
 }
 const directionBuy = { name: 'Buy' }
-const directionSell = { name: 'Buy' }
+const directionSell = { name: 'Sell' }
 
 export interface SpotTileProps {
   canPopout: boolean
   currencyChartIsOpening: boolean
-  currencyPair: {
-    symbol: string
-    // tslint:disable-next-line:trailing-comma
-    base: string
-  }
+  currencyPair: CurrencyPair
   currentSpotPrice: CurrentSpotPrice
   executionConnected: boolean
   hasNotification: boolean
@@ -54,7 +47,7 @@ export interface SpotTileProps {
   title: string
 }
 
-class SpotTile extends React.Component<SpotTileProps, {}> {
+export default class SpotTile extends React.Component<SpotTileProps, {}> {
   props: SpotTileProps
 
   render() {
@@ -65,7 +58,7 @@ class SpotTile extends React.Component<SpotTileProps, {}> {
     const notionalInputClass = classnames('spot-tile__notional', { hide: hasNotification })
     const spotDateClass = classnames('spot-tile__delivery', { hide: hasNotification })
     const generatedNotification = hasNotification ? this.createNotification(notification) : null
-    const priceComponents = this.createPriceComponents(title, currentSpotPrice, !hasNotification)
+    const priceComponents = this.createPriceComponents(title, currentSpotPrice, hasNotification)
     const showChartIQIcon = isRunningInOpenFin
 
     const chartIQIconClassName = classnames({
@@ -164,7 +157,7 @@ class SpotTile extends React.Component<SpotTileProps, {}> {
       return (
         <TradeNotification
           className="spot-tile__trade-summary"
-          tradeExecutionNotification={notification}
+          notification={notification}
           onDismissedClicked={() => replaceWithAction('tradeNotificationDismissed', {})} />
       )
     } else if (notification.notificationType === 'Text') {
@@ -177,25 +170,22 @@ class SpotTile extends React.Component<SpotTileProps, {}> {
   }
 }
 
-
-const mapStateToProps = (state:SpotTileProps): any => {
-  return {
-    canPopout: state.canPopout,
-    currencyChartIsOpening: state.currencyChartIsOpening,
-    currencyPair: state.currencyPair,
-    currentSpotPrice: state.currentSpotPrice,
-    executionConnected: state.executionConnected,
-    hasNotification: state.hasNotification,
-    isRunningInOpenFin: state.isRunningInOpenFin,
-    isTradeExecutionInFlight: state.isTradeExecutionInFlight,
-    maxNotional: state.maxNotional,
-    notification: state.notification,
-    notional: state.notional,
-    priceStale: state.priceStale,
-    pricingConnected: state.pricingConnected,
-    title: state.title,
-  }
-}
-
-
-export default connect(mapStateToProps)(SpotTile)
+// to be used in a container
+// const mapStateToProps = (state:SpotTileProps): any => {
+//   return {
+//     canPopout: state.canPopout,
+//     currencyChartIsOpening: state.currencyChartIsOpening,
+//     currencyPair: state.currencyPair,
+//     currentSpotPrice: state.currentSpotPrice,
+//     executionConnected: state.executionConnected,
+//     hasNotification: state.hasNotification,
+//     isRunningInOpenFin: state.isRunningInOpenFin,
+//     isTradeExecutionInFlight: state.isTradeExecutionInFlight,
+//     maxNotional: state.maxNotional,
+//     notification: state.notification,
+//     notional: state.notional,
+//     priceStale: state.priceStale,
+//     pricingConnected: state.pricingConnected,
+//     title: state.title,
+//   }
+// }

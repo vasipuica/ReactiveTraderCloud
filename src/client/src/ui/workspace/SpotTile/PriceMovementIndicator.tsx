@@ -14,6 +14,7 @@ export interface PriceMovementIndicatorProps {
   }
 }
 
+// tslint:disable-next-line:variable-name
 const PriceMovementIndicator = (props: PriceMovementIndicatorProps) => {
 
   const { priceMovementType, spread } = props
