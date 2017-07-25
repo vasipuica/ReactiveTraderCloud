@@ -10,8 +10,8 @@ import '../src/ui/common/styles/_base.scss'
 import '../src/ui/common/styles/_fonts.scss'
 
 import SpotTile, { NotionalInput, PriceButton, PriceMovementIndicator, 
-       TradeNotification } from '../src/ui/workspace/SpotTile'
-import '../src/ui/workspace/SpotTile/spotTile.scss'
+       TradeNotification } from '../src/ui/SpotTile'
+import '../src/ui/SpotTile/spotTile.scss'
 
 storiesOf('Welcome', module).add('to Storybook', () =>
   <button

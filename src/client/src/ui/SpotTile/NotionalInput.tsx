@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as numeral from 'numeral'
-import { hasShorthandInput, convertNotionalShorthandToNumericValue } from '../../../helpers/utils'
+import { hasShorthandInput, convertNotionalShorthandToNumericValue } from '../../helpers/utils'
 import * as classnames from 'classnames'
 import './notionalInput.scss'
 
