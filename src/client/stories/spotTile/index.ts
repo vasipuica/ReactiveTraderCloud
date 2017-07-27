@@ -1,4 +1,3 @@
-
 const getRandomNumber = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1) + min)
 
@@ -9,7 +8,7 @@ export const getContainerStyling = {
   padding: '5px',
 }
 
-export const getSpotTileProps = () => {
+export const getSpotTileProps = (executionConnected: boolean = true, isTradeExecutionInFlight: boolean = false) => {
   return {
     canPopout: true,
     currencyChartIsOpening: false,
@@ -26,10 +25,10 @@ export const getSpotTileProps = () => {
       },
       valueDate: 1234436547,
     },
-    executionConnected: false,
+    executionConnected,
     hasNotification: false,
     isRunningInOpenFin: false,
-    isTradeExecutionInFlight: false,
+    isTradeExecutionInFlight,
     maxNotional: 5000000,
     notification: {
       error: null,

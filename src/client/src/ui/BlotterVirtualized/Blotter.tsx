@@ -1,0 +1,169 @@
+import * as React from 'react'
+import { Table, Column } from 'react-virtualized'
+import { DateCell, NotionalCell } from './'
+import * as classNames from 'classnames'
+import 'fixed-data-table/dist/fixed-data-table.css'
+import './blotter.scss'
+
+// import { TradeRow } from '../../../services/model'
+type TradeRow = any
+
+export interface BlotterProps {
+  canPopout: boolean
+  isConnected: boolean
+  trades: any
+  // passed by SizeMe :
+  size: {
+    width: number
+    height: number,
+  }
+}
+
+// TODO: Move these to types and actions
+function replaceWithAction(a: any, b: any): void {
+  return
+}
+
+export default class Blotter extends React.Component<BlotterProps, {}> {
+  render() {
+    const { canPopout, isConnected, trades } = this.props
+    const columns = this.createGridColumns(trades)
+    const className = classNames(
+      'blotter', {
+        'blotter--online': isConnected,
+        'blotter--offline': !isConnected,
+      })
+    const newWindowClassName = classNames(
+      'glyphicon glyphicon-new-window',
+      {
+        'blotter__controls--hidden': canPopout,
+      },
+    )
+
+    return (
+      <div className={className}>
+        <div className="blotter-wrapper">
+          <div className="blotter__controls popout__controls">
+            <i className={newWindowClassName}
+               onClick={() => replaceWithAction('tearOffBlotter', {})}/>
+          </div>
+          <Table
+            rowHeight={30}
+            headerHeight={30}
+            rowCount={trades.length}
+            width={400}
+            height={600}
+            rowStyle={{ display: 'flex' }}
+            rowClassName={(index: any) => this.getRowClass(trades[index.index])}
+            rowGetter={(index: any) => trades[index.index].trade}>
+            {columns}
+          </Table>
+        </div>
+      </div>
+    )
+  }
+
+  createGridColumns(trades:any):any[] {
+    return [
+      <Column
+        key="Id"
+        dataKey="Id"
+        label={'Id'}
+        cellRenderer={(props: any) => <div>{trades[props.rowIndex].trade.tradeId}</div>}
+        flexGrow={1}
+        width={50}/>,
+      <Column
+        key="Date"
+        dataKey="Date"
+        label={'Date'}
+        cellRenderer={(props: any) => <DateCell 
+                        width={props.width} 
+                        dateValue={trades[props.rowIndex].trade.tradeDate} />}
+        flexGrow={1}
+        width={150}/>,
+      <Column
+        key="Dir"
+        dataKey="Dir"
+        label={'Direction'}
+        cellRenderer={(props: any) => <div>{trades[props.rowIndex].trade.direction.name.toUpperCase()}</div>}
+        flexGrow={1}
+        width={80}/>,
+      <Column
+        key="CCY"
+        dataKey="CCY"
+        label={'CCYCCY'}
+        cellRenderer={(props: any) => <div>{trades[props.rowIndex].trade.currencyPair.symbol}</div>}
+        flexGrow={1}
+        width={70}/>,
+      <Column
+        key="Notional"
+        dataKey="Notional"
+        label={'Notional'} // <div className="blotter__trade-field--align-right">
+        cellRenderer={(props: any) => {
+          const trade = trades[props.rowIndex].trade
+          return (
+            <NotionalCell
+              width={props.width}
+              className="blotter__trade-field--align-right"
+              notionalValue={trade.notional}
+              suffix={' ' + trade.currencyPair.base} />
+          )
+        }}
+        flexGrow={1}
+        width={120}/>,
+      <Column
+        key="Rate"
+        dataKey="Rate"
+        label={'Rate'} // <div className="blotter__trade-field--align-right">
+        cellRenderer={(props: any) => <div className="blotter__trade-field--align-right">
+          {trades[props.rowIndex].trade.spotRate}</div>}
+        flexGrow={1}
+        width={80}/>,
+      <Column
+        key="Status"
+        dataKey="Status"
+        label={'Status'}
+        cellRenderer={(props: any) => <div className="blotter__trade-status">
+          {trades[props.rowIndex].trade.status.name}</div>}
+        flexGrow={1}
+        width={80}/>,
+      <Column
+        key="Value date"
+        dataKey="Value date"
+        label={'Value date'}
+        cellRenderer={(props: any) => <DateCell 
+                        width={props.width} 
+                        prefix="SP. " 
+                        format="%d %b" 
+                        dateValue={trades[props.rowIndex].trade.valueDate} />}
+        flexGrow={1}
+        width={100}/>,
+      <Column
+        key="Trader"
+        dataKey="Trader"
+        label={'Trader'}
+        cellRenderer={(props: any) => <div>{trades[props.rowIndex].trade.traderName}</div>}
+        flexGrow={1}
+        width={80}/>,
+    ]
+  }
+
+  /**
+   * Returns the class to apply to a row
+   */
+  getRowClass(rowItem: TradeRow) {
+    if (!rowItem) {
+      return ''
+    }
+
+    return classNames(
+      'blotter__trade',
+      {
+        'blotter__trade--new': rowItem.isNew,
+        'blotter__trade--highlighted': rowItem.isInFocus,
+        'blotter__trade--rejected': rowItem.trade.status.name.toLowerCase() === 'rejected',
+        'blotter__trade--processing': rowItem.trade.status.name.toLowerCase() === 'processing',
+      },
+    )
+  }
+}

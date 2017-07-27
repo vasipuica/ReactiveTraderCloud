@@ -6,7 +6,7 @@ import { applyMiddleware, createStore } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import autobahnConnection from './services/autobahn'
-import { MainContainer } from './ui/main'
+import { Shell } from './ui/Shell/'
 import rootReducer from './reducers'
 
 const middlewares: any[] = [thunk]
@@ -23,7 +23,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <div>
-        <Route path="/" component={MainContainer} />
+        <Route path="/" component={Shell} />
       </div>
     </Router>
   </Provider>,

@@ -74,15 +74,15 @@ connection.onopen = (session, details) => {
     .filter(el => el.event === 'message')
 
   priceList$.subscribe((response) => {
-    console.log('$$$', response);
+    // console.log('$$$', response);
   });
 
   priceUpdates$.subscribe((response) => {
-    console.log('$$$', response);
+    // console.log('$$$', response);
   });
 
   priceSubMessages$.subscribe((response) => {
-    console.log('Price update', response);
+    // console.log('Price update', response);
   });
 };
 
@@ -114,7 +114,7 @@ connection.onopen = (session, details) => {
    */
   function RPC(session, remoteProcedure, payload, replyTo = '') {
 
-    console.log(session, remoteProcedure, payload, replyTo);
+    // console.log(session, remoteProcedure, payload, replyTo);
 
     return Rx.Observable.create(o => {
       // _log.debug(`Doing a RPC to [${remoteProcedure}]. Is connected [${_this._isConnected}]`);
@@ -131,7 +131,7 @@ connection.onopen = (session, details) => {
       session.call(remoteProcedure, dto).then(
         result => {
           if (!isDisposed) {
-            console.log('----', result);
+            // console.log('----', result);
             o.next(result);
             o.complete();
           } else {

@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const path = require('path')
 
 // you can use this file to add your custom webpack plugins, loaders and anything you like.
 // This is just the basic way to add additional webpack configurations.
@@ -17,12 +18,30 @@ module.exports = (baseConfig, env) => {
     module: {
       rules: [
         {
-          test: /\.(ts|tsx)$/,
-          loader: require.resolve('ts-loader'),
+          test: /\.tsx?$/,
+          loader: 'ts-loader'
+        },
+        {
+          test: /\.css$/,
+          include: [
+            path.resolve(__dirname, "non_existing_path_as_a_workaround")
+          ],
+          loader: ['style-loader', 'css-loader']
         },
         {
           test: /\.scss$/,
           loaders: ['style-loader', 'css-loader', 'sass-loader']
+        },
+        {
+          test: /\.(png|jpg|gif)$/,
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 100000
+              }
+            },
+          ]
         },
       ],
     },
