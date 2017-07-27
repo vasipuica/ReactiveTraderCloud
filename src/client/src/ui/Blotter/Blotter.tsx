@@ -40,7 +40,7 @@ export default class Blotter extends React.Component<BlotterProps, {}> {
         'blotter__controls--hidden': canPopout,
       },
     )
-    const { width, height } = this.props.size // comes from SizeMe
+    // const { width, height } = this.props.size // comes from SizeMe
 
     return (
       <div className={className}>
@@ -53,8 +53,8 @@ export default class Blotter extends React.Component<BlotterProps, {}> {
             rowHeight={30}
             headerHeight={30}
             rowsCount={trades.length}
-            width={width}
-            height={height}
+            width={900}
+            height={600}
             rowClassNameGetter={(index: any) => this.getRowClass(trades[index])}>
             {columns}
           </Table>

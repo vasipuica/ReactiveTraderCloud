@@ -51,7 +51,7 @@ export default class Blotter extends React.Component<BlotterProps, {}> {
             rowHeight={30}
             headerHeight={30}
             rowCount={trades.length}
-            width={400}
+            width={900}
             height={600}
             rowStyle={{ display: 'flex' }}
             rowClassName={(index: any) => this.getRowClass(trades[index.index])}
