@@ -21,7 +21,7 @@ storiesOf('Blotter', module)
   .add('Blotter virtualized', () =>
     <div style={{ background: '#FFFFFF' }}>
       <h2>Potential change from fixed-data-table to react-virtualized</h2>
-      <p>fixed-data-table is no longer maintained by Facebook and might become deprecated. As of 27 Jul 2017 react-virtualized is the most popular recommended upgrade. There is @types/react-virtualized package for TypeScript.</p>
+      <p>fixed-data-table is no longer maintained by Facebook and it's throwing deprecation warnings in the console with current React version. As of 27 Jul 2017 react-virtualized is the most popular recommended upgrade. There is @types/react-virtualized package for TypeScript.</p>
       <p>The components and their props are almost the same as in fixed-data-table</p>
       <p>Needs styling</p>
       <BlotterVirtualized {...blottersProps} />
