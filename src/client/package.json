@@ -30,6 +30,7 @@
   "dependencies": {
     "animate.css": "3.5.2",
     "autobahn": "17.5.2",
+    "d3-time-format": "2.0.5",
     "font-awesome": "4.7.0",
     "react": "^15.4.2",
     "react-dom": "^15.6.1",
@@ -44,6 +45,7 @@
     "@types/classnames": "2.2.0",
     "@types/d3": "4.10.0",
     "@types/fixed-data-table": "0.6.32",
+    "@types/lodash": "4.14.71",
     "@types/moment": "2.13.0",
     "@types/node": "8.0.14",
     "@types/numeral": "0.0.21",
