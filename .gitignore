@@ -3,7 +3,6 @@ src/client/coverage
 .idea/
 .vs/
 npm-debug.log
-node_modules
 dist/
 *.suo
 project.lock.json

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Blotter, DateCell, NotionalCell } from  '../src/ui/Blotter'
-import { Blotter as BlotterVirtualized } from  '../src/ui/BlotterVirtualized'
+import { Blotter, DateCell, NotionalCell } from  '../src/ui/blotter'
+import { Blotter as BlotterVirtualized } from  '../src/ui/blotterVirtualized'
 import blottersProps from './blotter/blottersProps'
 
 storiesOf('Blotter', module)

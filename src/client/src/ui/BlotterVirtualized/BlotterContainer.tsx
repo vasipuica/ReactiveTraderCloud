@@ -1,6 +1,6 @@
 import * as React from 'react'
 import blottersProps from '../../../stories/blotter/blottersProps'
-import Blotter from './Blotter'
+import Blotter from './blotter'
 
 class BlotterContainer extends React.Component<any, {}> {
   public render() {

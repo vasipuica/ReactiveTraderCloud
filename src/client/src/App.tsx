@@ -6,7 +6,7 @@ import { applyMiddleware, createStore } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import autobahnConnection from './services/autobahn'
-import { Shell } from './ui/Shell/'
+import { Shell } from './ui/shell/'
 import rootReducer from './reducers'
 
 const middlewares: any[] = [thunk]

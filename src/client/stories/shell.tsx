@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Shell } from '../src/ui/Shell'
+import { Shell } from '../src/ui/shell'
 
 storiesOf('Shell', module)
   .add('Show splash', () =>

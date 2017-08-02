@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { getContainerStyling, getButtonProps, getNotionalInputProps, 
+import { getContainerStyling, getButtonProps, getNotionalInputProps,
   getPriceMovementIndicatorProps, getSpotTileProps, getTradeNotificationProps } from './spotTile/'
-import SpotTile, { NotionalInput, PriceButton, PriceMovementIndicator, 
-       TradeNotification } from '../src/ui/SpotTile'
-import '../src/ui/SpotTile/spotTile.scss'
+import SpotTile, { NotionalInput, PriceButton, PriceMovementIndicator,
+       TradeNotification } from '../src/ui/spotTile'
+import '../src/ui/spotTile/spotTile.scss'
 
 const getButtons = (withContainerClass = true) =>
   <div className={ withContainerClass ? 'spot-tile' : ''}>

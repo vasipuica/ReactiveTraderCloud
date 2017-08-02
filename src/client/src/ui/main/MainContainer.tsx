@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
-import { WorkspaceContainer } from './../Workspace'
-import { BlotterContainer } from './../Blotter'
-import { AnalyticsContainer } from './../Analytics'
+import { WorkspaceContainer } from './../workspace'
+import { BlotterContainer } from './../blotter'
+import { AnalyticsContainer } from './../analytics'
 
 import './main.scss'
 import '../common/styles/_base.scss'

@@ -1,4 +1,4 @@
-export { default as Blotter } from './Blotter'
-export { default as BlotterContainer } from './BlotterContainer'
-export { default as DateCell } from './DateCell'
-export { default as NotionalCell } from './NotionalCell'
+export { default as Blotter } from './blotter'
+export { default as BlotterContainer } from './blotterContainer'
+export { default as DateCell } from './dateCell'
+export { default as NotionalCell } from './notionalCell'

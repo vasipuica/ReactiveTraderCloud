@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Modal } from '../Modal'
+import { Modal } from '../modal'
 import './shell.scss'
 import '../common/styles/_base.scss'
 import '../common/styles/_fonts.scss'
