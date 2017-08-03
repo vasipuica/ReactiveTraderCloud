@@ -7,6 +7,9 @@
     "no-console": false,
     "object-literal-sort-keys": false,
     "member-ordering": false,
+    "max-line-length": [
+      150
+    ],
     "semicolon": [true, "never"]
   },
   "lint": {
