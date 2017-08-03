@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './analytics.scss'
-import Analytics from './analytics'
+import Analytics from './Analytics'
 import analyticsProps from '../../../stories/analytics/analyticsProps'
 
 class AnalyticsContainer extends React.Component<any, {}> {
