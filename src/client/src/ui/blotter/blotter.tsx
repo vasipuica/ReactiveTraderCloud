@@ -20,6 +20,7 @@ export interface BlotterProps {
   }
 }
 
+
 export default class Blotter extends React.Component<BlotterProps, {}> {
   render() {
     const { canPopout, onPopoutClick, isConnected, trades, size } = this.props
