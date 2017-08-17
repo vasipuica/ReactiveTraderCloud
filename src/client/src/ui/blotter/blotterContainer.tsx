@@ -1,7 +1,7 @@
 import * as React from 'react'
 import sizeMe from 'react-sizeme'
-import {connect} from 'react-redux'
-import {onPopoutClick, onComponentMount, blotterRegionsSettings} from '../../redux/blotter/blotterOperations'
+import { connect } from 'react-redux'
+import { onPopoutClick, onComponentMount, blotterRegionsSettings } from '../../redux/blotter/blotterOperations'
 import Blotter from './blotter'
 
 class BlotterContainer extends React.Component<any, {}> {
@@ -39,17 +39,17 @@ const mapDispatchToProps = dispatch => {
     },
     onComponentMount: () => {
       dispatch(onComponentMount(blotterRegion))
-    }
+    },
   }
 }
 
-const ConnectedBlotterContainer = connect(mapStateToProps, mapDispatchToProps)(sizeMe({monitorHeight: true})(BlotterContainer))
+const ConnectedBlotterContainer = connect(mapStateToProps, mapDispatchToProps)(sizeMe({ monitorHeight: true })(BlotterContainer))
 
 const blotterRegion = {
   id: 'blotter',
   isTearedOff: false,
   container: ConnectedBlotterContainer,
-  settings: blotterRegionsSettings
+  settings: blotterRegionsSettings,
 }
 
 export default ConnectedBlotterContainer

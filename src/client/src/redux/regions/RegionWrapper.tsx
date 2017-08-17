@@ -1,10 +1,10 @@
 import * as React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import './region.scss'
 class RegionWrapper extends React.Component<any, any> {
 
   public render() {
-    const {region, children, service} = this.props
+    const { region, children, service } = this.props
     let displayChildComponent = true
 
     if (service && region && service[region]) {
@@ -14,7 +14,7 @@ class RegionWrapper extends React.Component<any, any> {
     const wrapperClassName = `region-wrapper ${!displayChildComponent ? 'region-wrapper--hidden' : ''}`
     return (
       <div className={wrapperClassName}>
-        { displayChildComponent ? children: '' }
+        { displayChildComponent ? children : '' }
       </div>
     )
   }
@@ -22,7 +22,7 @@ class RegionWrapper extends React.Component<any, any> {
 
 const mapStateToProps = (state) => {
   return {
-    service: state.regionsService
+    service: state.regionsService,
   }
 }
 
