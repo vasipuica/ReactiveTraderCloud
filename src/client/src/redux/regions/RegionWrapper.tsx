@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import './region.scss'
+
 class RegionWrapper extends React.Component<any, any> {
 
   public render() {
@@ -11,12 +11,7 @@ class RegionWrapper extends React.Component<any, any> {
       displayChildComponent = !service[region].isTearedOff
     }
 
-    const wrapperClassName = `region-wrapper ${!displayChildComponent ? 'region-wrapper--hidden' : ''}`
-    return (
-      <div className={wrapperClassName}>
-        { displayChildComponent ? children : '' }
-      </div>
-    )
+    return ( displayChildComponent ? children : '' )
   }
 }
 

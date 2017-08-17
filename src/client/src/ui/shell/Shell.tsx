@@ -6,6 +6,7 @@ import { WorkspaceContainer } from '../workspace/'
 import { BlotterContainer } from '../blotter'
 import { connect } from 'react-redux'
 import { reconnect } from './actions'
+import {RegionWrapper} from '../../redux/regions'
 import './shell.scss'
 import '../common/styles/_base.scss'
 import '../common/styles/_fonts.scss'
@@ -41,9 +42,11 @@ class ShellContainer extends React.Component<ShellProps, {}> {
           </Modal>
           <div className="shell_workspace_blotter">
             <WorkspaceContainer/>
-            <div className="shell__blotter">
-              <BlotterContainer/>
-            </div>
+            <RegionWrapper region="blotter">
+              <div className="shell__blotter">
+                <BlotterContainer/>
+              </div>
+            </RegionWrapper>
           </div>
           <SidebarRegionContainer/>
         </div>
