@@ -4,7 +4,7 @@ import { DateCell, NotionalCell } from './'
 import * as classNames from 'classnames'
 import 'fixed-data-table/dist/fixed-data-table.css'
 import './blotter.scss'
-import { TradeStatus } from '../../services/model/index';
+import { TradeStatus } from '../../services/model/index'
 
 // import { TradeRow } from '../../../services/model'
 type TradeRow = any
@@ -25,17 +25,16 @@ export default class Blotter extends React.Component<BlotterProps, {}> {
   render() {
     const { canPopout, onPopoutClick, isConnected, trades, size } = this.props
     const columns = this.createGridColumns(trades)
-    console.log('size: ', size)
     const className = classNames(
       'blotter', {
         'blotter--online': isConnected,
-        'blotter--offline': !isConnected
+        'blotter--offline': !isConnected,
       })
     const newWindowClassName = classNames(
       'glyphicon glyphicon-new-window',
       {
-        'blotter__controls--hidden': canPopout
-      }
+        'blotter__controls--hidden': canPopout,
+      },
     )
 
     return (
@@ -122,7 +121,7 @@ export default class Blotter extends React.Component<BlotterProps, {}> {
         dataKey="Status"
         label={'Status'}
         cellRenderer={(props: any) =>
-          <div className={classNames("blotter__trade-status", getStatusCellStyles(trades[props.rowIndex].status.name))}>
+          <div className={classNames('blotter__trade-status', getStatusCellStyles(trades[props.rowIndex].status.name))}>
             {trades[props.rowIndex].status.name}
           </div>}
         flexGrow={1}
@@ -144,7 +143,7 @@ export default class Blotter extends React.Component<BlotterProps, {}> {
         label={'Trader'}
         cellRenderer={(props: any) => <div>{trades[props.rowIndex].traderName}</div>}
         flexGrow={1}
-        width={80}/>
+        width={80}/>,
     ]
   }
 
@@ -158,15 +157,15 @@ export default class Blotter extends React.Component<BlotterProps, {}> {
 
     return classNames(
       'blotter__trade',
-      getTradeClassName(rowItem.status)
+      getTradeClassName(rowItem.status),
     )
   }
 }
 
 const getTradeClassName = (tradeStatus: TradeStatus) => {
   const tradeStatusMap = {
-    'Rejected': 'blotter__trade--rejected',
-    'Pending': 'blotter__trade--processing'
+    Rejected: 'blotter__trade--rejected',
+    Pending: 'blotter__trade--processing',
   }
   return tradeStatusMap[tradeStatus.name]
 }

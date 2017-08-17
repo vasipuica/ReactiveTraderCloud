@@ -21,7 +21,7 @@ export const regionsReducer = (state: any = {}, action) => {
       const newRegion = action.payload
       return {
         [newRegion.id]: newRegion,
-        ...state
+        ...state,
       }
     case ACTION_TYPES.REGION_TEAROFF_WINDOW:
       const payloadRegion = action.payload
@@ -31,7 +31,7 @@ export const regionsReducer = (state: any = {}, action) => {
       const cleanState = _.omit(state, [regionId])
       return {
         ...cleanState,
-        ...region
+        ...region,
       }
     default:
       return state
