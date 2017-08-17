@@ -11,7 +11,7 @@ class RegionWrapper extends React.Component<any, any> {
       displayChildComponent = !service[region].isTearedOff
     }
 
-    return ( displayChildComponent ? children : '' )
+    return ( displayChildComponent ? children : null )
   }
 }
 
