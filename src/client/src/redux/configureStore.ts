@@ -11,6 +11,7 @@ import { analyticsServiceEpic } from '../ui/analytics/analyticsOperations'
 import { compositeStatusServiceEpic } from './compositeStatusService/compositeStatusServiceOperations'
 import { connectionStatusEpicsCreator } from './connectionStatus/connectionStatusOperations'
 import { popoutEpic } from './popoutEpic'
+import { footerEpic } from '../ui/footer/FooterOperations'
 
 const epicMiddleware = (referenceDataService, blotterService, pricingService, analyticsService, compositeStatusService, openFin) => createEpicMiddleware(
   combineEpics(
@@ -20,7 +21,8 @@ const epicMiddleware = (referenceDataService, blotterService, pricingService, an
     analyticsServiceEpic(analyticsService),
     compositeStatusServiceEpic(compositeStatusService),
     connectionStatusEpicsCreator(compositeStatusService),
-    popoutEpic(openFin)
+    popoutEpic(openFin),
+    footerEpic(openFin)
   )
 )
 
