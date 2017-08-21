@@ -15,6 +15,7 @@ export const footerEpic = openFin => action$ => {
   return action$.ofType(ACTION_TYPES.OPEN_LINK)
     .map(action => {
       // check if we're running in openFin so we
+      console.log('action: ', action)
       return openLinks(openFin)
     })
 }
