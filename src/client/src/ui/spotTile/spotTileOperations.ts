@@ -102,7 +102,7 @@ export function spotTileEpicsCreator(executionService$, pricingService$, referen
 
 const updateSingleStateValue = (state: any = {}, symbol:string, flagKey:string, value:any): {}  => {
   const target = _.pick(state, symbol)
-  if (target[symbol] && target[symbol][flagKey]) {
+  if (target.hasOwnProperty(symbol) && target[symbol].hasOwnProperty(flagKey)) {
     target[symbol][flagKey] = value
   }
   return _.assign(state, target)
