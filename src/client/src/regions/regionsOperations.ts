@@ -1,8 +1,14 @@
 import * as _ from 'lodash'
 import { createAction } from 'redux-actions'
 
+export interface RegionSettings {
+  title: string,
+  width: number,
+  height: number,
+  dockable: boolean,
+}
 
-export const regionsSettings = (title, width, height, dockable) => {
+export const regionsSettings = (title:string, width:number, height:number, dockable:boolean): RegionSettings => {
   return {
     title,
     width,
@@ -10,7 +16,6 @@ export const regionsSettings = (title, width, height, dockable) => {
     dockable,
   }
 }
-
 
 export const ACTION_TYPES = {
   REGION_ADD: '@ReactiveTraderCloud/REGION_ADD',
@@ -24,9 +29,15 @@ export const openWindow = createAction(ACTION_TYPES.REGION_OPEN_WINDOW, (payload
 // onComponentMount
 export const addRegion = createAction(ACTION_TYPES.REGION_ADD, payload => payload)
 
+export interface Region {
+  id:string,
+  isTearedOff: boolean,
+  container: any,
+  settings: RegionSettings
+}
 
-const changeRegionTearOffStatus = (state, payload, status) => {
-  const regionId = payload.id
+const changeRegionTearOffStatus = (state, payload:Region, status:boolean) => {
+  const regionId:string = payload.id
   const region = _.pick(state, [regionId])
   region[regionId].isTearedOff = status
   const cleanState = _.omit(state, [regionId])
@@ -39,7 +50,7 @@ const changeRegionTearOffStatus = (state, payload, status) => {
 export const regionsReducer = (state: any = {}, action) => {
   switch (action.type) {
     case ACTION_TYPES.REGION_ADD:
-      const newRegion = action.payload
+      const newRegion:Region = action.payload
       return {
         [newRegion.id]: newRegion,
         ...state,

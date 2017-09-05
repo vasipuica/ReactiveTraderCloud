@@ -44,7 +44,7 @@ export enum ACTION_TYPES {
   PRICING_STALE = '@ReactiveTraderCloud/PRICING_STALE',
 }
 
-const stalePriceErrorMessage = 'Pricing is unavailable'
+const stalePriceErrorMessage:string = 'Pricing is unavailable'
 
 export const executeTrade = createAction(ACTION_TYPES.EXECUTE_TRADE, payload => payload)
 export const tradeExecuted = createAction(ACTION_TYPES.TRADE_EXECUTED)
@@ -100,7 +100,7 @@ export function spotTileEpicsCreator(executionService$, pricingService$, referen
   return combineEpics(executeTradeEpic, onPriceUpdateEpic, displayCurrencyChart, onTradeExecuted)
 }
 
-const changeValueInState = (state, symbol, flagKey, value) => {
+const updateSingleStateValue = (state: any = {}, symbol:string, flagKey:string, value:any): {}  => {
   const target = _.pick(state, symbol)
   if (target[symbol] && target[symbol][flagKey]) {
     target[symbol][flagKey] = value
@@ -114,11 +114,11 @@ export const spotTileReducer = (state: any = {}, { type, payload }) => {
       // TODO: prices shoould not update while execution is in progress
       return _.values(payload).reduce(spotTileAccumulator(state), {})
     case ACTION_TYPES.DISPLAY_CURRENCY_CHART:
-      return changeValueInState(state, payload.symbol, 'currencyChartIsOpening', true)
+      return updateSingleStateValue(state, payload.symbol, 'currencyChartIsOpening', true)
     case ACTION_TYPES.CURRENCY_CHART_OPENED:
-      return changeValueInState(state, payload.symbol, 'currencyChartIsOpening', false)
+      return updateSingleStateValue(state, payload.symbol, 'currencyChartIsOpening', false)
     case ACTION_TYPES.EXECUTE_TRADE:
-      return changeValueInState(state, payload.CurrencyPair, 'isTradeExecutionInFlight', true)
+      return updateSingleStateValue(state, payload.CurrencyPair, 'isTradeExecutionInFlight', true)
     case ACTION_TYPES.TRADE_EXECUTED:
       const response = payload
       const symbol = response.hasError ? response.trade.CurrencyPair : response.trade.currencyPair.symbol
@@ -128,7 +128,7 @@ export const spotTileReducer = (state: any = {}, { type, payload }) => {
       item.notification = buildNotification(response.trade, response.error)
       return state
     case ACTION_TYPES.DISMISS_NOTIFICATION:
-      return changeValueInState(state, payload.symbol, 'notification', null)
+      return updateSingleStateValue(state, payload.symbol, 'notification', null)
     case ACTION_TYPES.PRICING_STALE:
       const stalePrice = _.pick(state, payload.symbol)
       if (stalePrice) {
@@ -142,7 +142,7 @@ export const spotTileReducer = (state: any = {}, { type, payload }) => {
   }
 }
 
-function isPriceStale(prevItem, item) {
+function isPriceStale(prevItem: SpotPrice, item: SpotPrice):boolean {
   return prevItem && prevItem.hasOwnProperty('priceStale') &&
          item.creationTimestamp === prevItem.creationTimestamp &&
          prevItem.priceStale === true
@@ -241,8 +241,22 @@ export function toRate(rawRate: number, ratePrecision: number, pipPrecision: num
     pipFraction: Number(fractions.substring(pipPrecision, pipPrecision + 1)),
   }
 }
+interface Notification {
+  message?: string,
+  hasError: boolean,
+  notificationType: string,
+  direction?: string,
+  notional?: any,
+  status?: any,
+  dealtCurrency?: any,
+  termsCurrency?: any,
+  spotRate?: any,
+  formattedValueDate?: any,
+  tradeId?: any,
+}
 
-function buildNotification(trade, error) {
+
+function buildNotification(trade, error): Notification {
   if (error) {
     return { message: error, hasError: true, notificationType: NotificationType.Text }
   }
